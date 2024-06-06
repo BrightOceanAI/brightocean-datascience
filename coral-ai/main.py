@@ -3,6 +3,7 @@ import logging
 import werkzeug.exceptions
 from waitress import serve
 from flask_cors import CORS
+from azure.storage.blob import BlobClient
 from flask import Flask, request, Response, jsonify
 
 app = Flask(__name__)
@@ -20,7 +21,7 @@ def health_prediction():
             data = json.loads(request.data)
 
             return jsonify({
-                'Saude': 
+                'S':
             })
 
     return ''
