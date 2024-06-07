@@ -17,6 +17,7 @@ from io import BytesIO
 
 # Machine Learning
 from tensorflow.keras.models import load_model
+import tensorflow
 import numpy as np
 
 
@@ -25,7 +26,8 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.app_context().push()
 logging.getLogger('flask_cors').level = logging.DEBUG
-app.mode = 'prod'
+
+model = load_model('models/coral-ai.h5')
 
 
 def load_and_preprocess_image(img):
@@ -62,7 +64,6 @@ def health_prediction():
             bytes = np.frombuffer(response.content, dtype='uint8')
             image = Image.open(BytesIO(bytes))
             image_array = load_and_preprocess_image(image)
-            model = load_model('models/coral-ai.h5')
             prediction = predict_image(model, image_array)
 
             return jsonify({'Saúde': f'{prediction[0]}'}), 200
@@ -83,5 +84,6 @@ def handleMethodNotAllowed(error):
     return jsonify({'error': 'Método não permitido'}), 405
 
 
+# Remove for deploy in Azure Web App Service
 if __name__ == '__main__':
         app.run()
