@@ -2,7 +2,6 @@
 import json
 import logging
 import werkzeug.exceptions
-from waitress import serve
 from flask_cors import CORS
 from flask import Flask, request, jsonify
 
@@ -47,6 +46,11 @@ def predict_image(model, image):
     return predicted_label, confidence_score
 
 
+@app.route("/")
+def home():
+    return "Bem vindo a home de Machine Learning da Bright Ocean."
+
+
 @app.route('/prediction', methods=['POST'])
 def health_prediction():
     if request.method == 'POST':
@@ -80,7 +84,4 @@ def handleMethodNotAllowed(error):
 
 
 if __name__ == '__main__':
-    if app.mode == "dev":
-        app.run(debug=True, host='0.0.0.0', port=5001)
-    else:
-        serve(app, host='0.0.0.0', port=5001, threads=10, url_prefix="/coral-ai")
+        app.run()

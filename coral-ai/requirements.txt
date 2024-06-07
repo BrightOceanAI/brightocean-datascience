@@ -1,0 +1,10 @@
+json
+logging
+werkzeug
+waitress
+flask-cors
+flask
+requests
+Pillow
+tensorflow
+numpy
